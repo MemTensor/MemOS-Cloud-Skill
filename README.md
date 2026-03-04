@@ -1,116 +1,100 @@
-# MemOS Cloud Skill
+# MemOS Cloud Skill
 
-MemOS Cloud Server API 技能插件。该技能允许 Agent 或开发者直接调用 MemOS 云平台 API，实现记忆的检索、添加、删除以及反馈功能。
+[English](README.md) | [中文](README_zh.md)
 
-## 环境要求 (Prerequisites)
+MemOS Cloud Server API skill. This skill allows Agents or developers to directly call the MemOS Cloud Platform API to retrieve, add, delete, and feedback on memories.
 
-- **Python**: 3.x 及以上版本
-- **Python 依赖**: `requests` 模块
+## Prerequisites
 
-如果你的环境中还没有 `requests`，可通过以下命令进行安装：
+- **Python**: 3.x and above
+- **Python Dependencies**: `requests` module (`pip3 install requests`)
 
-```plaintext
-pip3 install requests
-```
+## Install
 
-## 安装与引入 (Installation)
-
-该技能已上传至 GitHub 仓库。
-
-### 方式一：使用命令安装（推荐）
-
-推荐使用 `skills` 命令进行安装：
+### Option A — Command Line (Recommended)
 
 ```bash
 npx skills add https://github.com/MemTensor/MemOS-Cloud-Skill
 ```
 
-### 方式二：本地克隆并手动复制安装
+### Option B — Manual Install
 
-1. 将本仓库克隆到本地：
-   ```bash
-   git clone https://github.com/MemTensor/MemOS-Cloud-Skill.git
-   ```
-2. 手动将技能文件夹复制到你对应的 agent 技能库目录中进行引入即可。
+1. Clone this repository to your local machine:
+    ```bash
+    git clone https://github.com/MemTensor/MemOS-Cloud-Skill.git
+    ```
+2. Manually copy the skill folder to your corresponding agent skills directory.
 
-## 配置环境变量 (Environment Variables)
+## Environment Variables
 
-**这是最重要的一步！在执行任何 API 操作前，你必须确保以下环境变量已经配置。**
+This step is critical. You must configure these variables before using the skill.
 
-### 必填环境变量
+**Where to configure**
 
-1. **MEMOS**\_API_KEY:
+- You can configure these globally in your system environment (e.g., `~/.bashrc`, `~/.zshrc`).
+- Or, you can configure them within your specific AI Agent or framework's environment settings (e.g., `.env` files for OpenClaw/Moltbot/Clawdbot).
 
-   - `MEMOS_API_KEY`: 在MemOS官网\[API控制台\](https://memos-dashboard.openmem.net/cn/apikeys/)上注册账号，然后在接口密钥页面新建api-key并复制粘贴在此处。
-   - ![image](https://alidocs.oss-cn-zhangjiakou.aliyuncs.com/res/v9kqDejjkRkrMOVx/img/aa5b288a-ef60-454c-96cb-ad01c726c4e9.png)
-2. **MEMOS**\_USER_ID:
+### Required
 
-   - **定义**：确定性的用户自定义个人标识符。
-   - **安全提示**：请不要使用随机值、设备 ID 或聊天会话 ID 作为用户标识符。对于同一用户，该标识符需要在不同设备/客户端中保持一致。
-   - **推荐使用**：个人 email 地址的哈希值、姓名全称或员工 ID。
+- `MEMOS_API_KEY` (required; Token auth) — get it at [MemOS API Console](https://memos-dashboard.openmem.net/cn/apikeys/)
+- `MEMOS_USER_ID` (required; A deterministic user-defined personal identifier, e.g., hashed email, employee ID) — **Do not use random or session IDs.**
 
----
-
-### 如何在不同操作系统中配置环境变量？
-
-#### Windows
-
-**方式一：通过 PowerShell 临时生效 (当前窗口)**
-
-```plaintext
-$env:MEMOS_API_KEY="你的_API_KEY"
-$env:MEMOS_USER_ID="你的_USER_ID"
+```env
+MEMOS_API_KEY=YOUR_TOKEN
+MEMOS_USER_ID=YOUR_USER_ID
 ```
 
-**方式二：通过 CMD 临时生效 (当前窗口)**
+### Optional config
 
-```plaintext
-set MEMOS_API_KEY=你的_API_KEY
-set MEMOS_USER_ID=你的_USER_ID
+- `MEMOS_CLOUD_URL` (default: `https://memos.memtensor.cn/api/openmem/v1`)
+
+### Quick setup (shell)
+
+```bash
+echo 'export MEMOS_API_KEY="mpg-..."' >> ~/.bashrc
+echo 'export MEMOS_USER_ID="user-123"' >> ~/.bashrc
+source ~/.bashrc
 ```
 
-**方式三：永久生效 (推荐)** 按 `Win + R` 键，输入 `sysdm.cpl` 后回车。进入“系统属性” -> “高级” -> “环境变量”。在你的“用户变量”中点击“新建”，分别添加名为 `MEMOS_API_KEY` 和 `MEMOS_USER_ID` 的变量与值。最后重启你的终端。
+### Quick setup (Windows PowerShell)
 
-#### Linux / macOS
-
-**临时生效 (当前终端窗口)**
-
-```plaintext
-export MEMOS_API_KEY="你的_API_KEY"
-export MEMOS_USER_ID="你的_USER_ID"
+```powershell
+[System.Environment]::SetEnvironmentVariable("MEMOS_API_KEY", "mpg-...", "User")
+[System.Environment]::SetEnvironmentVariable("MEMOS_USER_ID", "user-123", "User")
 ```
 
-**永久生效 (推荐)** 编辑你的 Shell 配置文件（如 `~/.bashrc` 或 `~/.zshrc`），在文件末尾添加以下内容：
+## How it Works / Usage
 
-```plaintext
-export MEMOS_API_KEY="你的_API_KEY"
-export MEMOS_USER_ID="你的_USER_ID"
-```
+Once installed and configured, this skill empowers your AI Agent (e.g., Trae, Cursor, OpenClaw) to manage your long-term memories autonomously. Simply communicate with your Agent through natural language, and it will intelligently decide when to call the underlying MemOS APIs based on your conversations.
 
-保存后，在终端执行 `source ~/.bashrc` 或 `source ~/.zshrc` 使配置立刻生效。
+### 1. Add Message (`/v1/add/message`)
 
----
+When you share preferences, facts, or instructions you want the Agent to remember, it will automatically extract the high-value content and save it to the MemOS cloud.
 
-## 功能与使用
+**Example Conversation:**
+- **You:** "Please remember that my primary programming language is Python and I prefer dark mode."
+- **Agent:** *(Recognizes intent -> Calls `add_message` skill)* "Got it! I've saved your preferences about Python and dark mode."
 
-安装并配置成功后，您的 AI 助手（如 Trae, Cursor 等）将自动获得以下记忆管理能力。您可以直接使用自然语言与助手交互。
+### 2. Search Memory (`/v1/search/memory`)
 
-### 核心功能
+Before answering complex questions or when explicitly asked, the Agent will search your past memories to provide highly personalized responses.
 
-- **记录记忆**：保存重要的事实、偏好或对话内容。
-- **检索记忆**：根据问题自动查找相关的历史信息。
-- **遗忘记忆**：删除不再需要或错误的信息。
+**Example Conversation:**
+- **You:** "Write a boilerplate script for my usual tech stack."
+- **Agent:** *(Recognizes intent -> Calls `search` skill to retrieve your python preferences)* "Sure! Here is a set of Python boilerplate code..."
 
-### 交互示例
+### 3. Delete Memory (`/v1/delete/memory`)
 
-**场景 1：添加记忆**
+If a memory is outdated or incorrect, simply tell the Agent to forget it.
 
-> "请记住我住在上海，平时喜欢在周末去跑步。" "记录一下，我的开发首选语言是 Python。" ![image.png](https://alidocs.oss-cn-zhangjiakou.aliyuncs.com/res/vBPlN5jjQoaKROdG/img/56ebdd17-17d9-4bae-96e5-f936c4adb006.png)
+**Example Conversation:**
+- **You:** "Forget my previous residential address, I've moved."
+- **Agent:** *(Recognizes intent -> Calls `delete` skill)* "I have removed your old address from my memory."
 
-**场景 2：查询记忆**
+### 4. Add Feedback (`/v1/add/feedback`)
 
-> "我之前说过我住在哪里吗？" "我有哪些饮食偏好？" ![image.png](https://alidocs.oss-cn-zhangjiakou.aliyuncs.com/res/vBPlN5jjQoaKROdG/img/49cc3bcd-5e92-46bc-ac67-375b2270929e.png)
+You can correct the Agent's behavior, and it will reinforce its memory for future interactions.
 
-**场景 3：删除记忆**
-
-> "删除关于我喜欢吃西红柿的记忆。" "忘记我之前的居住地址。" ![image.png](https://alidocs.oss-cn-zhangjiakou.aliyuncs.com/res/vBPlN5jjQoaKROdG/img/5bf3a927-3a18-41fe-9b64-ce5166897dbc.png)
+**Example Conversation:**
+- **You:** "Your last answer wasn't detailed enough. Next time, always provide code comments."
+- **Agent:** *(Recognizes intent -> Calls `add_feedback` skill)* "Understood. I will add more details and code comments in the future."
