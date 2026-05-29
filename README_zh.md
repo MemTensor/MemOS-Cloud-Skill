@@ -2,7 +2,7 @@
 
 [English](README.md) | [中文](README_zh.md)
 
-MemOS Cloud Server API 技能。该技能允许 Agent 或开发者直接调用 MemOS 云平台 API，实现记忆的检索、添加、删除以及反馈功能。
+MemOS Cloud Server API 技能。该技能允许 Agent 或开发者直接调用 MemOS 云平台 API，实现记忆的检索、添加、删除、知识库管理以及反馈功能。
 
 ## 环境要求 (Prerequisites)
 
@@ -14,7 +14,7 @@ MemOS Cloud Server API 技能。该技能允许 Agent 或开发者直接调用 M
 ### 方式一：使用命令安装（推荐）
 
 ```bash
-npx skills add https://github.com/MemTensor/MemOS-Cloud-Skill
+npx skills add https://github.com/MemTensor/MemOS-Cloud-Skill/memos-cloud-server
 ```
 
 ### 方式二：本地克隆并手动复制安装
@@ -23,7 +23,10 @@ npx skills add https://github.com/MemTensor/MemOS-Cloud-Skill
     ```bash
     git clone https://github.com/MemTensor/MemOS-Cloud-Skill.git
     ```
-2. 手动将技能文件夹复制到你对应的 agent 技能库目录中进行引入即可。
+2. 手动将技能文件夹复制到你对应的 agent 技能库目录或者使用命令安装：
+    ```bash
+    npx skills add ./MemOS-Cloud-Skill/memos-cloud-server
+    ```
 
 ## 配置环境变量 (Environment Variables)
 
@@ -46,7 +49,11 @@ MEMOS_USER_ID=你的_USER_ID
 
 ### 可选配置
 
-- `MEMOS_CLOUD_URL` (默认值: `https://memos.memtensor.cn/api/openmem/v1`)
+- `MEMOS_CLOUD_URL` — API 基础 URL（默认值: `https://memos.memtensor.cn/api/openmem/v1`）
+- `MEMOS_AGENT_ID` — Agent 标识符（多 Agent 场景使用）
+- `MEMOS_APP_ID` — 应用标识符（多应用场景使用）
+- `MEMOS_ALLOW_PUBLIC` — 是否允许公共记忆访问，`true`/`false`（默认: `false`）
+- `MEMOS_ASYNC_MODE` — 是否启用异步记忆添加，`true`/`false`（默认: `true`）
 
 ### 快速配置命令 (Shell 用户，如 Linux/macOS)
 
@@ -63,43 +70,98 @@ source ~/.bashrc
 [System.Environment]::SetEnvironmentVariable("MEMOS_USER_ID", "user-123", "User")
 ```
 
-## 功能与使用规范 (Usage)
+## 命令列表
 
-安装并配置成功后，您的 AI 助手（如 Trae, Cursor, OpenClaw 等）将自动获得记忆管理能力。您可以直接使用自然语言与助手交互，Agent 会根据对话上下文，智能识别意图并自主调用 MemOS 云端 API。
+### 1. 搜索记忆 (Search Memory)
 
-### 1. 添加记忆 (Add Message)
+```bash
+python3 scripts/memos_cloud.py search [user_id] "<query>" [options]
+```
 
-当您在对话中提及重要的事实、个人偏好或特定指令时，Agent 会自动提取高价值信息并将其存储到云端。
+选项: `--conversation-id`, `--conversation-first-message`, `--filter`, `--knowledgebase-ids`, `--memory-limit-number`, `--include-preference`, `--preference-limit-number`, `--include-tool-memory`, `--tool-memory-limit-number`, `--include-skill`, `--skill-limit-number`, `--relativity`
 
-**交互示例：**
+### 2. 添加记忆 (Add Message)
 
-- **用户：** “请记住，我平时开发首选语言是 Python，喜欢用深色主题。”
-- **Agent：** _(识别意图 -> 自动调用 `add_message` 技能)_ “好的，我已经记住了您关于 Python 和深色主题的偏好。”
+```bash
+python3 scripts/memos_cloud.py add_message [user_id] [conversation_id] '<messages_json>' [options]
+```
 
-### 2. 搜索记忆 (Search Memory)
-
-在回答问题之前，或者当您主动询问时，Agent 会根据当前问题去云端检索相关的历史记忆，并基于这些记忆给出最符合您个性化的回答。
-
-**交互示例：**
-
-- **用户：** “根据我常用的技术栈写一段初始化的模板代码。”
-- **Agent：** _(识别意图 -> 自动调用 `search` 技能查阅记录)_ “没问题！根据您的偏好，这里是一份 Python 的初始化模板代码……”
+选项: `--conversation-first-message`, `--tags`, `--info`, `--allow-knowledgebase-ids`
 
 ### 3. 删除记忆 (Delete Memory)
 
-当某些信息已经过时或者当初记录有误时，您可以直接命令 Agent 忘掉它们。
+```bash
+python3 scripts/memos_cloud.py delete "id1,id2,id3"
+```
 
-**交互示例：**
+### 4. 添加反馈 (Add Feedback)
 
-- **用户：** “忘记我之前的居住地址，我已经搬家了。”
-- **Agent：** _(识别意图 -> 自动调用 `delete` 技能)_ “明白，我已经从记忆中删除了您的旧地址信息。”
+```bash
+python3 scripts/memos_cloud.py add_feedback [user_id] <conversation_id> "<feedback>" [options]
+```
 
-### 4. 反馈 (Add Feedback)
+选项: `--allow-knowledgebase-ids`, `--feedback-time`
 
-如果 Agent 的回答不符合期望，您可以进行纠正，Agent 会自动将这些反馈添加到记忆流中，以便在未来的交互中改进。
+### 5. 上传知识库文档 (Add Knowledge Base Document)
 
-**交互示例：**
+```bash
+python3 scripts/memos_cloud.py add_kb_doc <knowledgebase_id> <file1> [file2 ...] [--type document|skill]
+python3 scripts/memos_cloud.py add_kb_doc <knowledgebase_id> --stdin [--name filename.ext] [--type document|skill]
+```
 
-- **用户：** “刚才的回答不够详细，以后请记得多加一些代码注释。”
-- **Agent：** _(识别意图 -> 自动调用 `add_feedback` 技能)_ “收到，今后的代码我会提供更详细的注释说明。”
+### 6. 获取用户画像 (Get User Profile)
 
+```bash
+python3 scripts/memos_cloud.py get_user_profile [user_id] [options]
+```
+
+选项: `--page`, `--size`, `--filter`, `--include-preference`, `--include-tool-memory`
+
+### 7. 创建知识库 (Create Knowledge Base)
+
+```bash
+python3 scripts/memos_cloud.py create_kb "<name>" [--description "<desc>"]
+```
+
+### 8. 获取知识库文件 (Get Knowledge Base Documents)
+
+两种模式（互斥）:
+
+```bash
+python3 scripts/memos_cloud.py get_kb_docs --file-ids "id1,id2"
+python3 scripts/memos_cloud.py get_kb_docs --knowledgebase-id "kb-1" [--type document|skill] [--page 1] [--page-size 20]
+```
+
+### 9. 删除知识库文件 (Delete Knowledge Base Documents)
+
+```bash
+python3 scripts/memos_cloud.py delete_kb_docs "file-id-1,file-id-2"
+```
+
+### 10. 移除知识库 (Remove Knowledge Base)
+
+```bash
+python3 scripts/memos_cloud.py remove_kb "kb-123"
+```
+
+## 交互示例
+
+### 添加记忆
+
+- **用户：** "请记住，我平时开发首选语言是 Python，喜欢用深色主题。"
+- **Agent：** _(识别意图 -> 自动调用 `add_message` 技能)_ "好的，我已经记住了您关于 Python 和深色主题的偏好。"
+
+### 搜索记忆
+
+- **用户：** "根据我常用的技术栈写一段初始化的模板代码。"
+- **Agent：** _(识别意图 -> 自动调用 `search` 技能)_ "没问题！根据您的偏好，这里是一份 Python 的初始化模板代码……"
+
+### 删除记忆
+
+- **用户：** "忘记我之前的居住地址，我已经搬家了。"
+- **Agent：** _(识别意图 -> 自动调用 `delete` 技能)_ "明白，我已经从记忆中删除了您的旧地址信息。"
+
+### 反馈纠正
+
+- **用户：** "刚才的回答不够详细，以后请记得多加一些代码注释。"
+- **Agent：** _(识别意图 -> 自动调用 `add_feedback` 技能)_ "收到，今后的代码我会提供更详细的注释说明。"

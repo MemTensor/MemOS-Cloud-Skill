@@ -3,7 +3,11 @@ __pycache__/
 *$py.class
 .DS_Store
 .env
+.venv/
 venv/
 .vscode/
 .idea/
 *.log
+.pytest_cache/
+*.egg-info/
+.claude/
