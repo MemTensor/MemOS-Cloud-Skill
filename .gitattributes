@@ -1,0 +1,7 @@
+tests/** export-ignore
+.pytest_cache/** export-ignore
+__pycache__/** export-ignore
+**/__pycache__/** export-ignore
+*.egg-info/ export-ignore
+pyproject.toml export-ignore
+pytest-cache-files-*/** export-ignore

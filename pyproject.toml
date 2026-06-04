@@ -1,0 +1,20 @@
+[project]
+name = "memos-cloud-skill"
+version = "1.0.0"
+description = "MemOS Cloud Server API skill runtime"
+requires-python = ">=3.8"
+dependencies = [
+    "requests",
+]
+
+[dependency-groups]
+dev = [
+    "pytest",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.setuptools.packages.find]
+where = ["memos-cloud-server/scripts"]
+include = ["memos_cloud*"]
