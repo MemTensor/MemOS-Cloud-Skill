@@ -1,0 +1,80 @@
+{
+  "file_count": 15,
+  "files": [
+    {
+      "path": "api-add-feedback.md",
+      "md5": "3a75eb11e0e364b02bb3341d832cd184",
+      "size": 2187
+    },
+    {
+      "path": "api-add-message.md",
+      "md5": "cac4eef268db35fffabbc8a816aa7e0a",
+      "size": 4325
+    },
+    {
+      "path": "api-chat.md",
+      "md5": "ba32ec681f0b99a07c4f95a070bf6884",
+      "size": 4058
+    },
+    {
+      "path": "api-delete-memory.md",
+      "md5": "082db055c77dd37f2385fc1136d3cb3d",
+      "size": 1800
+    },
+    {
+      "path": "api-search-memory.md",
+      "md5": "00bff39298b2a35f3856d672e7a0d91b",
+      "size": 4645
+    },
+    {
+      "path": "faq-and-limits.md",
+      "md5": "8896816fac7504884a6019c531ed59da",
+      "size": 3017
+    },
+    {
+      "path": "features-async-mode.md",
+      "md5": "82fe2bd3dfdb5e5a406d756f7b62bb0e",
+      "size": 676
+    },
+    {
+      "path": "features-filters.md",
+      "md5": "898839c9fadff2678b5fa94e6100b94e",
+      "size": 3608
+    },
+    {
+      "path": "features-knowledge-base.md",
+      "md5": "dfc2637be76b8ec2ab79f44f9359c813",
+      "size": 3041
+    },
+    {
+      "path": "features-multimodal.md",
+      "md5": "c557400204056cdb100ad291e090745c",
+      "size": 3054
+    },
+    {
+      "path": "features-skill.md",
+      "md5": "96c39d21cd3f05bc2e69e24342e88f5b",
+      "size": 3526
+    },
+    {
+      "path": "features-tool-memory.md",
+      "md5": "214f3d390494ffb0f214f71f894c4c64",
+      "size": 3806
+    },
+    {
+      "path": "index.md",
+      "md5": "33caf541c2250b12f2e4b1a62c352399",
+      "size": 2434
+    },
+    {
+      "path": "integration-guide.md",
+      "md5": "0216b6645b2bcc77ae97af6fae5979d6",
+      "size": 3212
+    },
+    {
+      "path": "quick-start.md",
+      "md5": "251475584bb3e4061c4ff1d149fc9e21",
+      "size": 2598
+    }
+  ]
+}

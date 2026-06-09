@@ -14,14 +14,14 @@ MemOS Cloud Server API 技能。该技能允许 Agent 或开发者直接调用 M
 ### 方式一：使用命令安装（推荐）
 
 ```bash
-npx skills add https://github.com/MemTensor/MemOS-Cloud-Skill/memos-cloud-server
+npx skills add https://github.com/shinetata/MemOS-Cloud-Skill/memos-cloud-server
 ```
 
 ### 方式二：本地克隆并手动复制安装
 
 1. 将本仓库克隆到本地：
     ```bash
-    git clone https://github.com/MemTensor/MemOS-Cloud-Skill.git
+    git clone https://github.com/shinetata/MemOS-Cloud-Skill.git
     ```
 2. 手动将技能文件夹复制到你对应的 agent 技能库目录或者使用命令安装：
     ```bash
