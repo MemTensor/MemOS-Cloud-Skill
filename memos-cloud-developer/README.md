@@ -162,10 +162,10 @@ sequenceDiagram
 
 ## 资源更新
 
-修改 `resources/` 目录下的文档后，运行以下命令更新 meta 信息：
+修改 `resources/` 目录下的文档后，在仓库根目录运行以下命令更新 meta 信息：
 
 ```bash
-python3 scripts/generate_meta.py
+python3 tools/memos-cloud-developer/generate_meta.py
 ```
 
 然后将变更提交并推送到仓库，已安装 Skill 的用户下次触发时会自动增量同步。
