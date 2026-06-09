@@ -195,5 +195,3 @@ npx skills add https://github.com/MemTensor/MemOS-Cloud-Skill --skill memos-clou
 - 按需生成 Python SDK / HTTP / cURL 代码示例
 - 覆盖功能特性：知识库、Tool Memory、多模态、Memory Filters、Skill、异步模式
 - 通过 `scripts/upgrade.py` 自动更新文档资源
-
-详细信息请参阅 [memos-cloud-developer/README.md](memos-cloud-developer/README.md)。
