@@ -29,7 +29,7 @@ license: Apache-2.0
 - 快速入门与鉴权配置
 - 核心 API 参考（addMessage、searchMemory、Chat、deleteMemory、addFeedback）
 - 功能特性（Memory Filters、多模态、Tool Memory、Skill、知识库、异步模式）
-- 集成方式（SDK / HTTP / CLI / MCP / OpenClaw Plugin）
+- 集成方式（Python SDK / HTTP / cURL / Agent Loop 架构）
 - 限制与 FAQ
 
 ## 使用建议

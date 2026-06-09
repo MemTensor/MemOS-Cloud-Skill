@@ -52,13 +52,13 @@ MemOS Cloud 的核心记忆操作接口。
 
 ## 4. 集成指南
 
-不同场景下接入 MemOS 的方式。
+将 MemOS Cloud 集成到你的 Agent 产品中。
 
-- [集成方式对比](integration-guide.md)
-  - Python SDK / HTTP 直调
-  - CLI + Skill（Cursor / Claude Code / Codex / Hermes）
-  - MCP（Cursor / Claude Desktop / Cline / Chatbox）
-  - OpenClaw Plugin
+- [集成指南](integration-guide.md)
+  - Python SDK（推荐）
+  - HTTP 直调
+  - cURL
+  - Agent Loop 集成架构
 
 ---
 

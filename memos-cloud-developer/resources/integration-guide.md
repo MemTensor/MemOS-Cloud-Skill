@@ -1,21 +1,20 @@
 # 集成指南
 
-MemOS Cloud 提供多种接入方式，根据你的开发场景选择最合适的集成路径。
+本文档面向**开发者构建自己的 Agent 产品**，介绍如何将 MemOS Cloud 的长期记忆能力集成到你的应用中。
 
 ## 集成方式对比
 
-| 集成方式 | 最适合 | 优先级 |
-|---------|--------|--------|
-| OpenClaw Plugin | OpenClaw 等深度集成 MemOS 的 Agent 环境 | 自动化程度最高 |
-| CLI + Skill | 任何可执行 Shell 的 Agent 框架 | 最通用，跨框架 |
-| MCP | Cursor, Claude Desktop, Cline, Chatbox 等 AI 客户端 | 客户端支持 MCP 时使用 |
-| API / SDK | 自建 Agent、聊天机器人、业务应用 | 控制力最强，适合生产集成 |
+| 集成方式 | 适合场景 | 特点 |
+|---------|---------|------|
+| Python SDK | Python Agent 应用、后端服务 | 推荐，OOP 接口，开箱即用 |
+| HTTP 直调 | 非 Python 环境、需要更底层控制 | 语言无关，适合任何 HTTP 客户端 |
+| cURL | 快速调试、接口验证 | 即时测试，无需编码 |
 
 ---
 
-## 1. Python SDK / HTTP 直调
+## 1. Python SDK
 
-最灵活的方式，适合自建 Agent 和业务应用。
+推荐方式，提供完整的面向对象接口。
 
 ### 安装
 
@@ -23,125 +22,191 @@ MemOS Cloud 提供多种接入方式，根据你的开发场景选择最合适�
 pip install MemoryOS -U
 ```
 
-### 使用
+### 初始化
 
 ```python
 from memos.api.client import MemOSClient
 
 client = MemOSClient(api_key="YOUR_API_KEY")
-
-# 写入
-client.add_message(messages=[...], user_id="...", conversation_id="...")
-
-# 检索
-result = client.search_memory(query="...", user_id="...")
 ```
 
-详见 [快速入门](quick-start.md) 和各 API 文档。
+### 核心调用
+
+```python
+# 写入记忆
+client.add_message(
+    messages=[
+        {"role": "user", "content": "用户输入"},
+        {"role": "assistant", "content": "Agent 回复"}
+    ],
+    user_id="user_001",
+    conversation_id="conv_001"
+)
+
+# 检索记忆
+result = client.search_memory(query="相关查询", user_id="user_001")
+
+# 一站式对话（自动召回记忆 + 生成回复）
+response = client.chat(
+    messages=[{"role": "user", "content": "用户输入"}],
+    user_id="user_001"
+)
+```
+
+详见各 API 文档：[addMessage](api-add-message.md) | [searchMemory](api-search-memory.md) | [Chat](api-chat.md)
 
 ---
 
-## 2. CLI + Skill
+## 2. HTTP 直调
 
-适合 Cursor、Claude Code、Codex、Hermes 等可执行 Shell 命令的 Agent。
+适合非 Python 环境或需要精细控制 HTTP 行为的场景。
 
-### 安装 CLI
+### 基础配置
 
-```bash
-npm install -g @memtensor/memos-cloud-cli
+```python
+import requests
+
+API_KEY = "YOUR_API_KEY"
+BASE_URL = "https://memos.memtensor.cn/api/openmem/v1"
+headers = {"Authorization": f"Token {API_KEY}", "Content-Type": "application/json"}
 ```
 
-### 初始化并安装 Skill
+### 写入记忆
 
-```bash
-memos init --api-key YOUR_API_KEY --agent cursor
-```
-
-支持的 `--agent` 目标：
-
-| Agent | Skill 安装路径 |
-|-------|---------------|
-| `cursor` | `~/.cursor/skills/memos/` |
-| `codex` | `~/.codex/skills/memos/` |
-| `claude` | `~/.claude/skills/memos/` |
-| `openclaw` | `~/.openclaw/skills/memos/` |
-| `hermes` | `~/.hermes/skills/memos/` |
-
-### 安装后的行为
-
-Agent 自动在每轮对话中：
-1. **回答前**：`memos search` 检索相关记忆
-2. **回答后**：`memos add` 写入新的事实/偏好
-
----
-
-## 3. MCP
-
-适合 Cursor、Claude Desktop、Cline、Chatbox 等支持 MCP 的客户端。
-
-### 配置（以 Cursor 为例）
-
-在 `mcp.json` 中添加：
-
-```json
-{
-  "mcpServers": {
-    "memos-api-mcp": {
-      "timeout": 60,
-      "type": "stdio",
-      "command": "npx",
-      "args": ["-y", "@memtensor/memos-api-mcp@latest"],
-      "env": {
-        "MEMOS_API_KEY": "YOUR_API_KEY",
-        "MEMOS_USER_ID": "your-user-id",
-        "MEMOS_CHANNEL": "MODELSCOPE"
-      }
+```python
+resp = requests.post(
+    f"{BASE_URL}/messages/",
+    headers=headers,
+    json={
+        "messages": [
+            {"role": "user", "content": "用户输入"},
+            {"role": "assistant", "content": "Agent 回复"}
+        ],
+        "user_id": "user_001",
+        "conversation_id": "conv_001"
     }
-  }
-}
+)
 ```
 
-### 配合 Cursor Rules 使用
+### 检索记忆
 
-```text
-Before answering the user's question, call MemOS search_memory to search long-term memories.
-After answering, if this turn contains new user facts or preferences, call add_message to write into MemOS.
-Only use memories relevant to the current task.
-Do not expose internal details like "memory store" to the user.
+```python
+resp = requests.post(
+    f"{BASE_URL}/search/",
+    headers=headers,
+    json={
+        "query": "相关查询",
+        "user_id": "user_001"
+    }
+)
+memories = resp.json()
 ```
 
 ---
 
-## 4. OpenClaw Plugin
+## 3. cURL
 
-适合使用 OpenClaw 的开发者，自动化程度最高。
+适合快速验证接口和调试。
 
-### 配置 API Key
-
-```bash
-mkdir -p ~/.openclaw
-echo 'MEMOS_API_KEY=YOUR_API_KEY' >> ~/.openclaw/.env
-```
-
-### 安装插件
+### 写入
 
 ```bash
-openclaw plugins install @memtensor/memos-cloud-openclaw-plugin@latest
-openclaw gateway restart
+curl -X POST "https://memos.memtensor.cn/api/openmem/v1/messages/" \
+  -H "Authorization: Token YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "messages": [{"role": "user", "content": "用户输入"}],
+    "user_id": "user_001",
+    "conversation_id": "conv_001"
+  }'
 ```
 
-### 确认启用
+### 检索
 
-检查 `~/.openclaw/openclaw.json`：
-
-```json
-{
-  "plugins": {
-    "entries": {
-      "memos-cloud-openclaw-plugin": {"enabled": true}
-    }
-  }
-}
+```bash
+curl -X POST "https://memos.memtensor.cn/api/openmem/v1/search/" \
+  -H "Authorization: Token YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "query": "相关查询",
+    "user_id": "user_001"
+  }'
 ```
 
-安装后 OpenClaw 会自动在对话中记忆和召回用户信息。
+---
+
+## 4. Agent Loop 集成架构
+
+在自建 Agent 中集成 MemOS 的典型架构：
+
+```
+用户输入
+   │
+   ▼
+┌──────────────────────────────────────┐
+│  1. searchMemory(query=用户输入)      │  ← 检索相关记忆
+│     获取 facts / preferences / tools │
+└──────────────────────────────────────┘
+   │
+   ▼
+┌──────────────────────────────────────┐
+│  2. 组装 Prompt                       │
+│     System Prompt + 记忆上下文 + 用户输入 │
+└──────────────────────────────────────┘
+   │
+   ▼
+┌──────────────────────────────────────┐
+│  3. 调用 LLM 生成回复                 │
+└──────────────────────────────────────┘
+   │
+   ▼
+┌──────────────────────────────────────┐
+│  4. addMessage(messages=[...])        │  ← 写入本轮对话
+│     MemOS 自动提取/更新记忆           │
+└──────────────────────────────────────┘
+   │
+   ▼
+返回回复给用户
+```
+
+### 伪代码示例
+
+```python
+from memos.api.client import MemOSClient
+from your_llm import call_llm
+
+client = MemOSClient(api_key="YOUR_API_KEY")
+
+def agent_respond(user_input: str, user_id: str, conv_id: str) -> str:
+    # Step 1: 检索记忆
+    memories = client.search_memory(query=user_input, user_id=user_id)
+    memory_context = format_memories(memories)
+
+    # Step 2: 组装 Prompt
+    messages = [
+        {"role": "system", "content": f"你是一个智能助手。以下是关于该用户的记忆：\n{memory_context}"},
+        {"role": "user", "content": user_input}
+    ]
+
+    # Step 3: 调用 LLM
+    reply = call_llm(messages)
+
+    # Step 4: 写入记忆
+    client.add_message(
+        messages=[
+            {"role": "user", "content": user_input},
+            {"role": "assistant", "content": reply}
+        ],
+        user_id=user_id,
+        conversation_id=conv_id
+    )
+
+    return reply
+```
+
+### 关键设计要点
+
+- **检索在前，写入在后**：先获取历史记忆注入上下文，生成回复后再写入新记忆
+- **user_id 隔离**：每个终端用户使用独立的 user_id，记忆互不干扰
+- **conversation_id 关联**：同一会话使用同一 conv_id，帮助 MemOS 理解对话连贯性
+- **异步写入可选**：写入操作可异步执行，不阻塞响应返回（详见 [异步模式](features-async-mode.md)）
