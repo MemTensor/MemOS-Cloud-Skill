@@ -7,7 +7,7 @@ This repository contains two complementary skills for the MemOS Cloud platform:
 | Skill | Purpose | Install |
 |-------|---------|---------|
 | **memos-cloud-server** | Runtime CLI — Agent calls MemOS APIs directly (search, add, delete, feedback) | `npx skills add .../memos-cloud-server` |
-| **memos-cloud-developer** | Developer guide — helps developers write integration code via natural language | `npx skills add .../memos-cloud-developer` |
+| **memos-cloud-developer** | Developer guide — helps developers write integration code via natural language | `npx skills add ... --skill memos-cloud-developer` |
 
 ---
 
@@ -27,14 +27,14 @@ MemOS Cloud Server API skill. This skill allows Agents or developers to directly
 Install from GitHub:
 
 ```bash
-npx skills add https://github.com/shinetata/MemOS-Cloud-Skill/memos-cloud-server
+npx skills add https://github.com/MemTensor/MemOS-Cloud-Skill/memos-cloud-server
 ```
 
 ### Option B — Local Path
 
 1. Clone this repository to your local machine:
     ```bash
-    git clone https://github.com/shinetata/MemOS-Cloud-Skill.git
+    git clone https://github.com/MemTensor/MemOS-Cloud-Skill.git
     ```
 2. Install from the local skill directory:
     ```bash
@@ -200,7 +200,7 @@ Developer assistant skill that helps integrate MemOS Cloud API/SDK into your app
 ### Install
 
 ```bash
-npx skills add https://github.com/shinetata/MemOS-Cloud-Skill/memos-cloud-developer
+npx skills add https://github.com/MemTensor/MemOS-Cloud-Skill --skill memos-cloud-developer --agent cursor -g -y
 ```
 
 ### What it does

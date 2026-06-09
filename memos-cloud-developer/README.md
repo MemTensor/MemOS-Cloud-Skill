@@ -12,33 +12,39 @@ MemOS Cloud 开发者助手 Skill。通过自然语言描述需求，直接获�
 
 ```bash
 # Cursor
-npx skills add https://github.com/shinetata/MemOS-Cloud-Skill/memos-cloud-developer --agent cursor
+npx skills add https://github.com/MemTensor/MemOS-Cloud-Skill --skill memos-cloud-developer --agent cursor -g -y
 
 # Trae
-npx skills add https://github.com/shinetata/MemOS-Cloud-Skill/memos-cloud-developer --agent trae
+npx skills add https://github.com/MemTensor/MemOS-Cloud-Skill --skill memos-cloud-developer --agent trae -g -y
 
 # Trae-CN
-npx skills add https://github.com/shinetata/MemOS-Cloud-Skill/memos-cloud-developer --agent trae-cn
+npx skills add https://github.com/MemTensor/MemOS-Cloud-Skill --skill memos-cloud-developer --agent trae-cn -g -y
 
 # Claude Code
-npx skills add https://github.com/shinetata/MemOS-Cloud-Skill/memos-cloud-developer --agent claude-code
+npx skills add https://github.com/MemTensor/MemOS-Cloud-Skill --skill memos-cloud-developer --agent claude-code -g -y
 
 # Codex
-npx skills add https://github.com/shinetata/MemOS-Cloud-Skill/memos-cloud-developer --agent codex
+npx skills add https://github.com/MemTensor/MemOS-Cloud-Skill --skill memos-cloud-developer --agent codex -g -y
 
 # OpenClaw
-npx skills add https://github.com/shinetata/MemOS-Cloud-Skill/memos-cloud-developer --agent openclaw
+npx skills add https://github.com/MemTensor/MemOS-Cloud-Skill --skill memos-cloud-developer --agent openclaw -g -y
 
 # Hermes
-npx skills add https://github.com/shinetata/MemOS-Cloud-Skill/memos-cloud-developer --agent hermes
+npx skills add https://github.com/MemTensor/MemOS-Cloud-Skill --skill memos-cloud-developer --agent hermes -g -y
 
 # 所有 Agent 一次安装
-npx skills add https://github.com/shinetata/MemOS-Cloud-Skill/memos-cloud-developer --all
+npx skills add https://github.com/MemTensor/MemOS-Cloud-Skill --skill memos-cloud-developer --all -g -y
 ```
 
 安装完成后，在工具的 Agent 面板中可以看到 **memos-cloud-developer** Skill 已加载，即表示安装成功。
 
 > 调用本 Skill 时，会自动执行 `scripts/upgrade.py` 脚本，升级最新的资料库。
+
+## 卸载方式
+
+```bash
+npx skills remove -s memos-cloud-developer -g -y
+```
 
 ## 环境准备
 
@@ -124,7 +130,7 @@ sequenceDiagram
 
     Note over Dev,Tool: 阶段1: 安装 Skill (一次性)
 
-    Dev->>Tool: npx skills add .../MemOS-Cloud-Skill/memos-cloud-developer --agent cursor
+    Dev->>Tool: npx skills add .../MemOS-Cloud-Skill --skill memos-cloud-developer --agent cursor -g -y
     Tool->>GitHub: 下载 Skill 包 (SKILL.md + resources/ + scripts/)
     GitHub-->>Tool: 返回完整 Skill 文件
     Tool-->>Dev: 安装成功，Skill 已加载
