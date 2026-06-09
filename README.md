@@ -6,8 +6,8 @@ This repository contains two complementary skills for the MemOS Cloud platform:
 
 | Skill | Purpose | Install |
 |-------|---------|---------|
-| **memos-cloud-server** | Runtime CLI — Agent calls MemOS APIs directly (search, add, delete, feedback) | `npx skills add .../memos-cloud-server` |
-| **memos-cloud-developer** | Developer guide — helps developers write integration code via natural language | `npx skills add ... --skill memos-cloud-developer` |
+| **memos-cloud-server** | Runtime CLI — Agent calls MemOS APIs directly (search, add, delete, feedback) | `npx skills add https://github.com/MemTensor/MemOS-Cloud-Skill/memos-cloud-server` |
+| **memos-cloud-developer** | Developer guide — helps developers write integration code via natural language | `npx skills add https://github.com/MemTensor/MemOS-Cloud-Skill --skill memos-cloud-developer --agent cursor -g -y` |
 
 ---
 

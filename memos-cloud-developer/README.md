@@ -4,7 +4,7 @@ MemOS Cloud 开发者助手 Skill。通过自然语言描述需求，直接获�
 
 **支持的 SDK 语言：** Python、HTTP、cURL
 
-**支持的编码工具：** Cursor、Trae、Trae-CN、Claude Code、Codex、OpenClaw、Hermes、Antigravity
+**支持的编码工具：** Cursor、Trae、Trae-CN、Claude Code、Codex、OpenClaw、Hermes
 
 ## 安装方式
 
