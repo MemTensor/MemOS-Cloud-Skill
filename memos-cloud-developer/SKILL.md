@@ -1,6 +1,6 @@
 ---
 name: memos-cloud-developer
-description: 指导开发者接入与使用 MemOS Cloud API/SDK，覆盖记忆写入(addMessage)、记忆检索(searchMemory)、对话(Chat)、反馈(addFeedback)、删除(deleteMemory)及知识库、Tool Memory、Skill、多模态等特性的安装、鉴权、接口调用与问题诊断。当用户需要在 AI 应用或 Agent 中集成长期记忆能力、使用 MemOS Cloud 进行开发时使用。
+description: 指导开发者接入与使用 MemOS Cloud API/SDK，覆盖记忆写入、记忆检索、对话、反馈、删除及知识库等特性的安装、鉴权、接口调用与问题诊断。当用户需要在 AI 应用或 Agent 中集成长期记忆能力、使用 MemOS Cloud 进行开发时使用。
 version: 1.0.0
 license: Apache-2.0
 ---
