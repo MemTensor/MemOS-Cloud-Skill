@@ -2,9 +2,20 @@
 
 [English](README.md) | [中文](README_zh.md)
 
+本仓库包含两个互补的 MemOS Cloud 平台技能：
+
+| 技能 | 用途 | 安装 |
+|------|------|------|
+| **memos-cloud-server** | 运行时 CLI — Agent 直接调用 MemOS API（检索、添加、删除、反馈） | `npx skills add https://github.com/MemTensor/MemOS-Cloud-Skill/memos-cloud-server` |
+| **memos-cloud-developer** | 开发者助手 — 通过自然语言帮助开发者编写集成代码 | `npx skills add https://github.com/MemTensor/MemOS-Cloud-Skill --skill memos-cloud-developer --agent cursor -g -y` |
+
+---
+
+## memos-cloud-server
+
 MemOS Cloud Server API 技能。该技能允许 Agent 或开发者直接调用 MemOS 云平台 API，实现记忆的检索、添加、删除、知识库管理以及反馈功能。
 
-## 环境要求 (Prerequisites)
+### 环境要求 (Prerequisites)
 
 - **Python**: 3.x 及以上版本
 - **Python 依赖**: `requests` 模块 (`pip3 install requests`)
@@ -165,3 +176,22 @@ python3 scripts/memos_cloud.py remove_kb "kb-123"
 
 - **用户：** "刚才的回答不够详细，以后请记得多加一些代码注释。"
 - **Agent：** _(识别意图 -> 自动调用 `add_feedback` 技能)_ "收到，今后的代码我会提供更详细的注释说明。"
+
+---
+
+## memos-cloud-developer
+
+开发者助手技能，帮助将 MemOS Cloud API/SDK 集成到你的应用中。通过自然语言描述需求，直接获得可运行的集成代码，或对接入问题进行精准诊断。
+
+### 安装
+
+```bash
+npx skills add https://github.com/MemTensor/MemOS-Cloud-Skill --skill memos-cloud-developer --agent cursor -g -y
+```
+
+### 功能说明
+
+- 指导开发者完成 MemOS Cloud API 集成（addMessage、searchMemory、Chat 等）
+- 按需生成 Python SDK / HTTP / cURL 代码示例
+- 覆盖功能特性：知识库、Tool Memory、多模态、Memory Filters、Skill、异步模式
+- 通过 `scripts/upgrade.py` 自动更新文档资源
