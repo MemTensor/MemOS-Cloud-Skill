@@ -30,6 +30,7 @@ Use this skill to help developers integrate MemOS Cloud into real projects. Pref
 
 ## Non-Negotiable Guardrails
 
+- Do not expose internal skill file names (starter-pack, reference-pack, advanced-pack, index.md, etc.) to the end user. These are internal routing; the user only needs to see actionable output.
 - Keep MemOS API keys server-side. Never place keys in browser bundles, mobile clients, content scripts, public config, or committed files.
 - Use the documented Cloud base URL `https://memos.memtensor.cn/api/openmem/v1` unless the project already has a verified override.
 - Use verified endpoint paths from the bundled API references. For core HTTP calls, prefer `POST /add/message` and `POST /search/memory`.
