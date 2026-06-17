@@ -1,38 +1,66 @@
 ---
 name: memos-cloud-developer
-description: 指导开发者接入与使用 MemOS Cloud API/SDK，覆盖记忆写入、记忆检索、对话、反馈、删除及知识库等特性的安装、鉴权、接口调用与问题诊断。当用户需要在 AI 应用或 Agent 中集成长期记忆能力、使用 MemOS Cloud 进行开发时使用。
-version: 1.0.0
-license: Apache-2.0
+description: MemOS Cloud long-term memory integration for AI apps. Use for addMessage, searchMemory, Chat API, knowledge base, feedback, deletion, filters, Tool Memory, Skill, multimodal, and async mode. Helps with "接入 MemOS", "给应用加记忆", "add memory to my app", "MemOS API errors", and Cloud API/SDK integration code.
 ---
 
-## 使用场景
+# MemOS Cloud Developer
 
-本 Skill 需要配合 Cursor、Trae、Trae-CN、Claude Code、Codex、OpenClaw、Hermes、Antigravity 等工具使用。
+Use this skill to help developers integrate MemOS Cloud into real projects. Prefer source-backed code and minimal task-specific docs over broad API summaries.
 
-## MemOS Cloud 开发者助手
+## Required Workflow
 
-本 Skill 旨在帮助开发者快速接入和使用 MemOS Cloud 平台的 API/SDK，为 AI 应用和 Agent 添加长期记忆能力。
+1. Run `scripts/upgrade.py` from this skill folder before reading resources. If network access is blocked, report that resource sync failed and continue with the bundled resources already present.
+2. Verify this skill is functional: confirm that at least `resources/cn/index.md` (or `resources/en/index.md`) exists and is readable. If the file cannot be read, stop and report a broken skill installation.
+3. Read `resources/index.md` and choose the resource locale:
+   - Use `resources/cn/index.md` for Chinese user requests or Chinese product/docs work.
+   - Use `resources/en/index.md` for English user requests.
+   - If the user's language is mixed, prefer the language used for the requested deliverable.
+4. For any broad request such as "integrate MemOS", "add long-term memory", "make my Agent remember", "接入 MemOS", or "长期记忆", read the selected locale's `starter-pack.md` before any API reference.
+5. Use the selected locale's `index.md` to choose the smallest necessary resource set. Do not load every resource by default.
+6. Check environment for `MEMOS_API_KEY`:
+   - If present and starts with `mpg-`: run a quick FTS (add + search) to confirm connectivity before writing integration code.
+   - If missing or placeholder: guide the user to https://memos-dashboard.openmem.net/cn/quickstart to get a Key, then have them `export MEMOS_API_KEY="mpg-..."`. Optionally install CLI (`npm i -g @memtensor/memos-cloud-cli`) to simplify FTS. Do not proceed to code generation until FTS passes or the user explicitly skips verification.
+7. Inspect the user's project before writing integration code. Identify backend/frontend boundaries, package manager, framework, runtime, existing LLM call path, auth model, and test commands from local files.
+8. Choose the integration path:
+   - Product or Vibe Coding integration: prefer server-side API/SDK integration with `addMessage` + `searchMemory` unless the user explicitly wants MemOS to generate replies through Chat API.
+   - Knowledge-base retrieval: combine `features-knowledge-base.md` with `api-search-memory.md`.
+9. Generate code that fits the detected stack. Use Python SDK only for Python backends; use HTTP for Node/TypeScript, Java/Spring, browser-extension backends, and other non-Python stacks.
+10. Run a final verification with the generated integration code if the project supports it (tests, type checks, lint, or a live add+search call).
 
-调用本 Skill 处理 MemOS 相关需求时，先执行本 Skill 安装路径下的 `scripts/upgrade.py` 更新本地 `resources` 目录中的资源文件，再读取导引文档。
+## Non-Negotiable Guardrails
 
-处理与本 Skill 相关的任何请求时，按以下顺序执行：
+- Keep MemOS API keys server-side. Never place keys in browser bundles, mobile clients, content scripts, public config, or committed files.
+- Use the documented Cloud base URL `https://memos.memtensor.cn/api/openmem/v1` unless the project already has a verified override.
+- Use verified endpoint paths from the bundled API references. For core HTTP calls, prefer `POST /add/message` and `POST /search/memory`.
+- Do not mix MemOS Cloud, open-source local deployment, MCP, Dashboard setup, and CLI setup unless the selected route requires it.
+- Treat `user_id` as a stable end-user identifier and `conversation_id` as a stable thread/session identifier. Do not use random IDs per turn unless the product intentionally wants no continuity.
+- If documentation is incomplete, inconsistent, or stale, state the gap and choose the narrowest verified path instead of inventing behavior.
+- For deletion, feedback, project configuration, and Cloud/Open Source boundary questions, be conservative and read the relevant reference before answering.
 
-1. 运行本 Skill 安装路径下的 `scripts/upgrade.py`，同步最新资源文件到 `resources/`。
-2. 优先阅读 `resources/index.md`。
-3. 根据 `resources/index.md` 中的导航进入对应的 API 参考、功能特性或常见问题文档。
+## Resource Routing
 
-## 导引入口
+Start from `resources/index.md`. It only selects language. Then use `resources/cn/index.md` or `resources/en/index.md` for task routes.
 
-所有文档导引统一收敛在 [resources/index.md](resources/index.md)。
+- `resources/{locale}/starter-pack.md` for first-time integration, FTS validation, project inspection, safety rules, and handoff checklist.
+- `resources/{locale}/reference-pack.md` for API reference routing, Knowledge Base routing, delete/feedback/chat references, and endpoint-source guardrails.
+- `resources/{locale}/advanced-pack.md` for multimodal input, Tool Memory, Skill Memory, Filters, tags, async nuance, and other advanced features.
+- `resources/{locale}/integration-guide.md` for Agent-loop architecture and general API/SDK patterns.
+- `resources/{locale}/api-add-message.md` and `resources/{locale}/api-search-memory.md` for the default product integration loop.
+- `resources/{locale}/api-get-memory.md` to list/inspect a user's memories (and to resolve `memory_ids` before deletion).
+- `resources/{locale}/api-rerank.md` for relevance reranking of candidate documents (not a replacement for searchMemory).
+- `resources/{locale}/api-chat.md` only when the user wants MemOS to handle both memory and reply generation.
+- `resources/{locale}/features-knowledge-base.md` for document/knowledge-base retrieval.
+- `resources/{locale}/features-filters.md`, `features-async-mode.md`, `features-tool-memory.md`, `features-skill.md`, and `features-multimodal.md` only when the requested feature needs them.
+- `resources/{locale}/faq-and-limits.md` for limits, error triage, and deployment caveats.
 
-`resources/index.md` 已汇总以下内容：
-- 快速入门与鉴权配置
-- 核心 API 参考（addMessage、searchMemory、Chat、deleteMemory、addFeedback）
-- 功能特性（Memory Filters、多模态、Tool Memory、Skill、知识库、异步模式）
-- 集成方式（Python SDK / HTTP / cURL / Agent Loop 架构）
-- 限制与 FAQ
+## Output Contract
 
-## 使用建议
+When producing integration code, include:
 
-- 若用户问题已经明确指向某个 API 或特性，直接读取对应的下钻文档。
-- 生成代码时优先使用 Python SDK，也支持 HTTP 和 cURL 示例。
+1. Files changed or proposed.
+2. Environment variables required.
+3. Request/response shape used.
+4. Where memory search is injected into the LLM prompt.
+5. Where the completed user/assistant turn is written back.
+6. Verification steps, including a no-key local check and an optional live check with `MEMOS_API_KEY`.
+7. Any unresolved product or documentation gap.

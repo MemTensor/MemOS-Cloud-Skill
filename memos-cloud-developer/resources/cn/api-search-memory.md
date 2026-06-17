@@ -108,12 +108,12 @@ curl "$MEMOS_BASE_URL/search/memory" \
 | `conversation_id` | string | - | 优先召回当前会话相关记忆 |
 | `filter` | object | - | 结构化过滤条件（参见 features-filters.md） |
 | `relativity` | float | 0.45 | 相关性阈值，越高越严格 |
-| `memory_limit_number` | int | - | 返回事实记忆的最大数量 |
+| `memory_limit_number` | int | 6 | 返回事实记忆的最大数量 |
 | `include_preference` | bool | true | 是否召回偏好记忆 |
-| `preference_limit_number` | int | - | 偏好记忆最大数量 |
+| `preference_limit_number` | int | 6 | 偏好记忆最大数量 |
 | `include_skill` | bool | false | 是否召回 Skill 记忆 |
 | `include_tool_memory` | bool | false | 是否召回 Tool 记忆 |
-| `tool_memory_limit_number` | int | - | Tool 记忆最大数量 |
+| `tool_memory_limit_number` | int | 6 | Tool 记忆最大数量 |
 | `knowledgebase_ids` | array | - | 可搜索的知识库 ID 列表 |
 
 ## 高级用法

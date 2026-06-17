@@ -1,5 +1,11 @@
 # 快速入门
 
+如果用户的目标是“把 MemOS Cloud 接入现有项目”，先从 [Starter Pack](starter-pack.md) 开始。它包含可复制给 Agent 的中文 Prompt、项目检查清单、FTS 验证和安全边界。本文件只用于最小 Cloud API/SDK 跑通。
+
+## 可复制给 Agent 的 Prompt
+
+可复制的接入 Prompt 统一维护在 [starter-pack.md](starter-pack.md)（“可复制给 Agent 的中文 Prompt”一节），此处不重复，避免多处漂移。
+
 ## 环境准备
 
 1. 注册并登录 [MemOS Cloud](https://memos-dashboard.openmem.net/quickstart)
