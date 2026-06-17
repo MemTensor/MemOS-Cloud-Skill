@@ -19,8 +19,8 @@ Use this skill to help developers integrate MemOS Cloud into real projects. Pref
 5. Use the selected locale's `index.md` to choose the smallest necessary resource set. Do not load every resource by default.
 6. Check environment for `MEMOS_API_KEY`:
    - If present and starts with `mpg-`: run a quick add + search verification to confirm connectivity. Show the user what was written and what was retrieved.
-   - If missing or placeholder: guide the user to https://memos-dashboard.openmem.net/cn/quickstart to get a Key, then have them `export MEMOS_API_KEY="mpg-..."`. Optionally install CLI (`npm i -g @memtensor/memos-cloud-cli`) to simplify verification.
-   - After verification passes (or user skips), report the result and STOP. Wait for user's next instruction. Do NOT inspect the project, choose integration paths, or generate any code unless the user explicitly asks.
+   - If missing or placeholder: do NOT skip. Tell the user they need to configure a Key to proceed. Provide the steps: go to https://memos-dashboard.openmem.net/cn/quickstart to get a Key, then run `export MEMOS_API_KEY="mpg-..."`. Wait for the user to confirm the Key is set, then run verification.
+   - After verification passes, report the result and STOP. Wait for user's next instruction. Do NOT inspect the project, choose integration paths, or generate any code unless the user explicitly asks.
 
 The following steps only execute when the user explicitly requests integration code:
 
