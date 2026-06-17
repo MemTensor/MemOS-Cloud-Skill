@@ -110,7 +110,7 @@ Preferences:
 
 Do not say "I found in your memory" unless the product explicitly wants that UX.
 
-## FTS / First-Time Success Check
+## Connectivity Verification
 
 > A real API key looks like `mpg-...`. If it is still a placeholder, guide the user to https://memos-dashboard.openmem.net/quickstart to get one first.
 
@@ -118,7 +118,7 @@ After integration code is written, check the `MEMOS_API_KEY` env var:
 - **Present and starts with `mpg-`** → automatically run one add + search loop to verify.
 - **Missing or placeholder** → prompt the user to configure it (via `memos init` or manual `export`), provide copy-paste commands.
 
-FTS = write a fact → wait a few seconds → search retrieves it. Prefer CLI; fall back to cURL:
+Verification = write a fact → wait a few seconds → search retrieves it. Prefer CLI; fall back to cURL:
 
 ```bash
 # CLI (preferred)
@@ -137,7 +137,7 @@ curl "$MEMOS_BASE_URL/search/memory" \
   -d '{"user_id":"fts_user","query":"What language does the user prefer?"}'
 ```
 
-FTS passes only when search returns a relevant memory hit. If it misses right after write, check `features-async-mode.md` (default is async with a few seconds delay).
+Verification passes only when search returns a relevant memory hit. If it misses right after write, check `features-async-mode.md` (default is async with a few seconds delay).
 
 ## Safety And Privacy
 

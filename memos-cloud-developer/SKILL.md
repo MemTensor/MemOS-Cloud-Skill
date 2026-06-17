@@ -18,9 +18,10 @@ Use this skill to help developers integrate MemOS Cloud into real projects. Pref
 4. For any broad request such as "integrate MemOS", "add long-term memory", "make my Agent remember", "接入 MemOS", or "长期记忆", read the selected locale's `starter-pack.md` before any API reference.
 5. Use the selected locale's `index.md` to choose the smallest necessary resource set. Do not load every resource by default.
 6. Check environment for `MEMOS_API_KEY`:
-   - If present and starts with `mpg-`: run a quick FTS (add + search) to confirm connectivity before writing integration code.
-   - If missing or placeholder: guide the user to https://memos-dashboard.openmem.net/cn/quickstart to get a Key, then have them `export MEMOS_API_KEY="mpg-..."`. Optionally install CLI (`npm i -g @memtensor/memos-cloud-cli`) to simplify FTS. Do not proceed to code generation until FTS passes or the user explicitly skips verification.
-7. Inspect the user's project before writing integration code. Identify backend/frontend boundaries, package manager, framework, runtime, existing LLM call path, auth model, and test commands from local files.
+   - If present and starts with `mpg-`: run a quick add + search verification to confirm connectivity.
+   - If missing or placeholder: guide the user to https://memos-dashboard.openmem.net/cn/quickstart to get a Key, then have them `export MEMOS_API_KEY="mpg-..."`. Optionally install CLI (`npm i -g @memtensor/memos-cloud-cli`) to simplify verification.
+   - After verification passes, report the result and wait for user instructions. Do not automatically generate integration code unless the user explicitly asked for it in the same request.
+7. When the user asks to generate integration code, inspect the project first. Identify backend/frontend boundaries, package manager, framework, runtime, existing LLM call path, auth model, and test commands from local files.
 8. Choose the integration path:
    - Product or Vibe Coding integration: prefer server-side API/SDK integration with `addMessage` + `searchMemory` unless the user explicitly wants MemOS to generate replies through Chat API.
    - Knowledge-base retrieval: combine `features-knowledge-base.md` with `api-search-memory.md`.

@@ -108,7 +108,7 @@ Content-Type: application/json
 
 除非产品 UX 明确要求，不要说“我从记忆库里查到”。
 
-## FTS / 首次验证
+## 连通性验证
 
 > API Key 形如 `mpg-...`。占位符状态时先引导用户到 https://memos-dashboard.openmem.net/cn/quickstart 获取 Key。
 
