@@ -75,7 +75,7 @@ headers = {"Authorization": f"Token {API_KEY}", "Content-Type": "application/jso
 
 ```python
 resp = requests.post(
-    f"{BASE_URL}/messages/",
+    f"{BASE_URL}/add/message",
     headers=headers,
     json={
         "messages": [
@@ -92,7 +92,7 @@ resp = requests.post(
 
 ```python
 resp = requests.post(
-    f"{BASE_URL}/search/",
+    f"{BASE_URL}/search/memory",
     headers=headers,
     json={
         "query": "相关查询",
@@ -111,7 +111,7 @@ memories = resp.json()
 ### 写入
 
 ```bash
-curl -X POST "https://memos.memtensor.cn/api/openmem/v1/messages/" \
+curl -X POST "https://memos.memtensor.cn/api/openmem/v1/add/message" \
   -H "Authorization: Token YOUR_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{
@@ -124,7 +124,7 @@ curl -X POST "https://memos.memtensor.cn/api/openmem/v1/messages/" \
 ### 检索
 
 ```bash
-curl -X POST "https://memos.memtensor.cn/api/openmem/v1/search/" \
+curl -X POST "https://memos.memtensor.cn/api/openmem/v1/search/memory" \
   -H "Authorization: Token YOUR_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{

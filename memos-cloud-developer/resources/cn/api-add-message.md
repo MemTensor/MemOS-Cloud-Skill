@@ -81,9 +81,13 @@ curl "$MEMOS_BASE_URL/add/message" \
 |------|------|------|
 | `chat_time` | string | 消息中每条的实际发生时间，格式 `"2025-09-12 08:00:00"` |
 | `agent_id` | string | Agent 标识，用于按 Agent 隔离记忆 |
+| `app_id` | string | 应用标识 |
 | `tags` | array | 自定义标签，用于后续过滤 |
 | `info` | object | 业务元数据（如 `scene`, `biz_id`, `business_type`, `custom_status`） |
-| `async_mode` | string | 异步模式控制（参见 features-async-mode.md） |
+| `async_mode` | bool | 异步模式，默认 true（参见 features-async-mode.md） |
+| `source` | string | 来源标识 |
+| `allow_public` | bool | 是否允许记忆被公开检索（默认 false） |
+| `allow_knowledgebase_ids` | array | 允许写入的知识库 ID 列表 |
 
 ## 高级用法
 
