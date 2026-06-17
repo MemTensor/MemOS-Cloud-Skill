@@ -20,8 +20,11 @@ Use this skill to help developers integrate MemOS Cloud into real projects. Pref
 6. Check environment for `MEMOS_API_KEY`:
    - If present and starts with `mpg-`: run a quick add + search verification to confirm connectivity.
    - If missing or placeholder: guide the user to https://memos-dashboard.openmem.net/cn/quickstart to get a Key, then have them `export MEMOS_API_KEY="mpg-..."`. Optionally install CLI (`npm i -g @memtensor/memos-cloud-cli`) to simplify verification.
-   - After verification passes, report the result and wait for user instructions. Do not automatically generate integration code unless the user explicitly asked for it in the same request.
-7. When the user asks to generate integration code, inspect the project first. Identify backend/frontend boundaries, package manager, framework, runtime, existing LLM call path, auth model, and test commands from local files.
+   - After verification passes (or user skips), report the result and STOP. Wait for user's next instruction. Do NOT inspect the project, choose integration paths, or generate any code unless the user explicitly asks.
+
+The following steps only execute when the user explicitly requests integration code:
+
+7. Inspect the user's project. Identify backend/frontend boundaries, package manager, framework, runtime, existing LLM call path, auth model, and test commands from local files.
 8. Choose the integration path:
    - Product or Vibe Coding integration: prefer server-side API/SDK integration with `addMessage` + `searchMemory` unless the user explicitly wants MemOS to generate replies through Chat API.
    - Knowledge-base retrieval: combine `features-knowledge-base.md` with `api-search-memory.md`.
