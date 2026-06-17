@@ -46,17 +46,17 @@ The following steps only execute when the user explicitly requests integration c
 
 Start from `resources/index.md`. It only selects language. Then use `resources/cn/index.md` or `resources/en/index.md` for task routes.
 
-- `resources/{locale}/starter-pack.md` for first-time integration, FTS validation, project inspection, safety rules, and handoff checklist.
-- `resources/{locale}/reference-pack.md` for API reference routing, Knowledge Base routing, delete/feedback/chat references, and endpoint-source guardrails.
-- `resources/{locale}/advanced-pack.md` for multimodal input, Tool Memory, Skill Memory, Filters, tags, async nuance, and other advanced features.
-- `resources/{locale}/integration-guide.md` for Agent-loop architecture and general API/SDK patterns.
-- `resources/{locale}/api-add-message.md` and `resources/{locale}/api-search-memory.md` for the default product integration loop.
-- `resources/{locale}/api-get-memory.md` to list/inspect a user's memories (and to resolve `memory_ids` before deletion).
-- `resources/{locale}/api-rerank.md` for relevance reranking of candidate documents (not a replacement for searchMemory).
-- `resources/{locale}/api-chat.md` only when the user wants MemOS to handle both memory and reply generation.
-- `resources/{locale}/features-knowledge-base.md` for document/knowledge-base retrieval.
-- `resources/{locale}/features-filters.md`, `features-async-mode.md`, `features-tool-memory.md`, `features-skill.md`, and `features-multimodal.md` only when the requested feature needs them.
-- `resources/{locale}/faq-and-limits.md` for limits, error triage, and deployment caveats.
+- [starter-pack.md](resources/cn/starter-pack.md) for first-time integration, connectivity verification, project inspection, and safety rules.
+- [reference-pack.md](resources/cn/reference-pack.md) for API reference routing, Knowledge Base routing, delete/feedback/chat references, and endpoint-source guardrails.
+- [advanced-pack.md](resources/cn/advanced-pack.md) for multimodal input, Tool Memory, Skill Memory, Filters, tags, async nuance, and other advanced features.
+- [integration-guide.md](resources/cn/integration-guide.md) for Agent-loop architecture and general API/SDK patterns.
+- [api-add-message.md](resources/cn/api-add-message.md) and [api-search-memory.md](resources/cn/api-search-memory.md) for the default product integration loop.
+- [api-get-memory.md](resources/cn/api-get-memory.md) to list/inspect a user's memories (and to resolve `memory_ids` before deletion).
+- [api-rerank.md](resources/cn/api-rerank.md) for relevance reranking of candidate documents (not a replacement for searchMemory).
+- [api-chat.md](resources/cn/api-chat.md) only when the user wants MemOS to handle both memory and reply generation.
+- [features-knowledge-base.md](resources/cn/features-knowledge-base.md) for document/knowledge-base retrieval.
+- [features-filters.md](resources/cn/features-filters.md), [features-async-mode.md](resources/cn/features-async-mode.md), [features-tool-memory.md](resources/cn/features-tool-memory.md), [features-skill.md](resources/cn/features-skill.md), and [features-multimodal.md](resources/cn/features-multimodal.md) only when the requested feature needs them.
+- [faq-and-limits.md](resources/cn/faq-and-limits.md) for limits, error triage, and deployment caveats.
 
 ## Output Contract
 
