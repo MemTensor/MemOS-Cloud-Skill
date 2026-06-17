@@ -17,11 +17,10 @@ Use this skill to help developers integrate MemOS Cloud into real projects. Pref
    - If the user's language is mixed, prefer the language used for the requested deliverable.
 4. For any broad request such as "integrate MemOS", "add long-term memory", "make my Agent remember", "接入 MemOS", or "长期记忆", read the selected locale's `starter-pack.md` before any API reference.
 5. Use the selected locale's `index.md` to choose the smallest necessary resource set. Do not load every resource by default.
-6. Ask the user if they want to verify MemOS Cloud connectivity:
-   - Ask: "要不要先测试一下 MemOS Cloud 的连通性？如果需要，请提供你的 API Key（以 mpg- 开头）。"
-   - If the user provides a Key: run `memos add` + `memos search` (or cURL equivalent), then clearly show the user what was written and what was retrieved, so they can see the memory capability in action.
-   - If the user says skip or has no Key yet: guide them to https://memos-dashboard.openmem.net/cn/quickstart to get one, and offer to continue when ready.
-   - After verification (or skip), STOP. Wait for user's next instruction. Do NOT inspect the project, choose integration paths, or generate any code unless the user explicitly asks.
+6. Check environment for `MEMOS_API_KEY`:
+   - If present and starts with `mpg-`: run a quick add + search verification to confirm connectivity. Show the user what was written and what was retrieved.
+   - If missing or placeholder: guide the user to https://memos-dashboard.openmem.net/cn/quickstart to get a Key, then have them `export MEMOS_API_KEY="mpg-..."`. Optionally install CLI (`npm i -g @memtensor/memos-cloud-cli`) to simplify verification.
+   - After verification passes (or user skips), report the result and STOP. Wait for user's next instruction. Do NOT inspect the project, choose integration paths, or generate any code unless the user explicitly asks.
 
 The following steps only execute when the user explicitly requests integration code:
 
