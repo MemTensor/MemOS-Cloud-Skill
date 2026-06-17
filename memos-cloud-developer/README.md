@@ -1,18 +1,43 @@
 # MemOS Cloud Developer Skill
 
+A developer skill for integrating MemOS Cloud long-term memory into AI applications.
+
 为 AI 应用接入 MemOS Cloud 长期记忆的开发者 Skill。
 
-## 安装
+## Install
 
 ```bash
 npx skills add https://github.com/MemTensor/MemOS-Cloud-Skill --skill memos-cloud-developer -g -y
 ```
 
-## 使用
+## Usage
+
+Copy one of the following prompts into your AI Agent (Codex, Cursor, Claude Code, Trae, OpenClaw, etc.):
 
 将以下 prompt 复制到你的 AI Agent（Codex、Cursor、Claude Code、Trae、OpenClaw 等）聊天框中：
 
-### Prompt：为项目接入 MemOS Cloud 记忆
+### English Prompt
+
+```text
+Integrate MemOS Cloud into this project to give my Agent product long-term memory.
+
+Steps:
+
+1. Install the memos-cloud-developer Skill (skip if already installed):
+   npx skills add https://github.com/MemTensor/MemOS-Cloud-Skill --skill memos-cloud-developer -g -y
+   Auto-fill the --agent parameter based on the current Agent environment.
+
+2. Read SKILL.md from the Skill's install path and follow its instructions in order.
+
+3. Verify connectivity:
+   Check if MEMOS_API_KEY env var exists and starts with mpg-.
+   If yes, run one add + search loop via memos CLI or cURL to confirm;
+   If not, guide me to https://memos-dashboard.openmem.net/quickstart to get a Key.
+
+4. Generate complete MemOS Cloud integration code based on this project's actual tech stack.
+```
+
+### 中文 Prompt
 
 ```text
 帮我为本项目接入 MemOS Cloud，为我的 Agent 产品添加长期记忆能力。
@@ -33,6 +58,8 @@ npx skills add https://github.com/MemTensor/MemOS-Cloud-Skill --skill memos-clou
 4. 结合本项目的实际技术栈和架构，生成完整的 MemOS Cloud 集成代码。
 ```
 
-## API Key 获取
+## Get API Key
+
+Sign up at [MemOS Dashboard](https://memos-dashboard.openmem.net/quickstart) and get your API Key (format: `mpg-...`).
 
 前往 [MemOS Dashboard](https://memos-dashboard.openmem.net/cn/quickstart) 注册并获取 API Key（格式：`mpg-...`）。
