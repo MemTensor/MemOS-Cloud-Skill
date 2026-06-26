@@ -25,7 +25,7 @@ from urllib.request import urlopen
 REPO_ROOT = Path(__file__).resolve().parent.parent
 TARGET_DIR = REPO_ROOT / "resources"
 
-BASE_URL = "https://raw.githubusercontent.com/MemTensor/MemOS-Cloud-Skill/main/memos-cloud-developer/resources"
+BASE_URL = "https://raw.githubusercontent.com/MemTensor/MemOS-Cloud-Skill/main/memos-cloud/resources"
 VERSION_URL = f"{BASE_URL}/version"
 META_URL = f"{BASE_URL}/meta.json"
 LOCAL_VERSION_PATH = TARGET_DIR / "version"

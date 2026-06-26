@@ -18,7 +18,7 @@ import sys
 from pathlib import Path, PurePosixPath
 
 REPO_ROOT = Path(__file__).resolve().parent.parent.parent
-RESOURCES_DIR = REPO_ROOT / "memos-cloud-developer" / "resources"
+RESOURCES_DIR = REPO_ROOT / "memos-cloud" / "resources"
 
 EXCLUDED_FILES = {"version", "meta.json"}
 

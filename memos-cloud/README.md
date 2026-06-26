@@ -1,13 +1,13 @@
-# MemOS Cloud Developer Skill
+# MemOS Cloud Skill
 
-A developer skill for integrating MemOS Cloud long-term memory into AI applications.
+MemOS Cloud long-term memory skill for AI applications.
 
-为 AI 应用接入 MemOS Cloud 长期记忆的开发者 Skill。
+为 AI 应用接入 MemOS Cloud 长期记忆的 Skill。
 
 ## Install
 
 ```bash
-npx skills add https://github.com/MemTensor/MemOS-Cloud-Skill --skill memos-cloud-developer -g -y
+npx skills add https://github.com/MemTensor/MemOS-Cloud-Skill --skill memos-cloud -g -y
 ```
 
 ## Usage
@@ -21,8 +21,8 @@ Copy the following prompt into your AI Agent (Codex, Cursor, Claude Code, Trae, 
 
 请按以下步骤操作：
 
-1. 安装 memos-cloud-developer Skill（如已安装则跳过）：
-   npx skills add https://github.com/MemTensor/MemOS-Cloud-Skill --skill memos-cloud-developer -g -y
+1. 安装 memos-cloud Skill（如已安装则跳过）：
+   npx skills add https://github.com/MemTensor/MemOS-Cloud-Skill --skill memos-cloud -g -y
    根据当前 Agent 环境自动填充 --agent 参数。
 
 2. 读取该 Skill 安装路径下的 SKILL.md，严格按照其中的指令顺序执行。

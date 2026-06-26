@@ -7,7 +7,7 @@ This repository contains two complementary skills for the MemOS Cloud platform:
 | Skill | Purpose | Install |
 |-------|---------|---------|
 | **memos-cloud-server** | Runtime CLI — Agent calls MemOS APIs directly (search, add, delete, feedback) | `npx skills add https://github.com/MemTensor/MemOS-Cloud-Skill/memos-cloud-server` |
-| **memos-cloud-developer** | Developer guide — helps developers write integration code via natural language | `npx skills add https://github.com/MemTensor/MemOS-Cloud-Skill --skill memos-cloud-developer --agent cursor -g -y` |
+| **memos-cloud** | MemOS Cloud Skill — helps integrate long-term memory into AI apps via natural language | `npx skills add https://github.com/MemTensor/MemOS-Cloud-Skill --skill memos-cloud --agent cursor -g -y` |
 
 ---
 
@@ -193,19 +193,19 @@ python3 memos-cloud-server/scripts/memos_cloud.py --help
 
 ---
 
-## memos-cloud-developer
+## memos-cloud
 
-Developer assistant skill that helps integrate MemOS Cloud API/SDK into your applications. It provides documentation guidance and generates runnable code through natural language interaction.
+MemOS Cloud Skill that helps integrate long-term memory into your AI applications. It provides documentation guidance and generates runnable code through natural language interaction.
 
 ### Install
 
 ```bash
-npx skills add https://github.com/MemTensor/MemOS-Cloud-Skill --skill memos-cloud-developer --agent cursor -g -y
+npx skills add https://github.com/MemTensor/MemOS-Cloud-Skill --skill memos-cloud --agent cursor -g -y
 ```
 
 ### What it does
 
-- Guides developers through MemOS Cloud API integration (addMessage, searchMemory, Chat, etc.)
+- Guides you through MemOS Cloud API integration (addMessage, searchMemory, Chat, etc.)
 - Generates Python SDK / HTTP / cURL code examples on demand
 - Covers features: Knowledge Base, Tool Memory, Multimodal, Filters, Skill, Async Mode
 - Auto-updates its documentation via `scripts/upgrade.py`

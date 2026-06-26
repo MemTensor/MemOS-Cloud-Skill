@@ -1,4 +1,4 @@
-# MemOS Cloud Developer Resource Router
+# MemOS Cloud Resource Router
 
 Choose one locale-specific docs index before reading task resources.
 

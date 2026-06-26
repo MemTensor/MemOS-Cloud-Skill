@@ -8,9 +8,9 @@
         "memos-cloud-server/SKILL.md",
         "memos-cloud-server/scripts/memos_cloud.py",
         "memos-cloud-server/scripts/memos_cloud/**/*.py",
-        "memos-cloud-developer/SKILL.md",
-        "memos-cloud-developer/scripts/**/*.py",
-        "memos-cloud-developer/resources/**/*"
+        "memos-cloud/SKILL.md",
+        "memos-cloud/scripts/**/*.py",
+        "memos-cloud/resources/**/*"
     ],
     "scripts": {
         "verify": "uv run pytest && uv run python memos-cloud-server/scripts/memos_cloud.py --help && npm pack --dry-run",

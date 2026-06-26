@@ -1,11 +1,11 @@
 ---
-name: memos-cloud-developer
+name: memos-cloud
 description: MemOS Cloud long-term memory integration for AI apps. Use for addMessage, searchMemory, Chat API, knowledge base, feedback, deletion, filters, Tool Memory, Skill, multimodal, and async mode. Helps with "接入 MemOS", "给应用加记忆", "add memory to my app", "MemOS API errors", and Cloud API/SDK integration code.
 ---
 
-# MemOS Cloud Developer
+# MemOS Cloud
 
-Use this skill to help developers integrate MemOS Cloud into real projects. Prefer source-backed code and minimal task-specific docs over broad API summaries.
+Use this skill to help users integrate MemOS Cloud into real projects. Prefer source-backed code and minimal task-specific docs over broad API summaries.
 
 ## Required Workflow
 
