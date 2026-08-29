@@ -146,3 +146,52 @@ def test_cli_add_kb_doc_requires_files_or_stdin(capsys):
         "error": "Validation Error",
         "message": "Either provide files or use --stdin",
     }
+
+
+def test_cli_add_message_with_messages_file(tmp_path, capsys):
+    """Large payloads should be loadable from disk via --messages-file."""
+    client = RecordingClient({"task_id": "abc-123"})
+    payload_path = tmp_path / "msgs.json"
+    payload_path.write_text(
+        json.dumps([{"role": "user", "content": "from-file"}, {"role": "assistant", "content": "ok"}]),
+        encoding="utf-8",
+    )
+
+    exit_code = main(
+        ["add_message", "user-1", "conv-1", "--messages-file", str(payload_path), "--tags", "from-file"],
+        client=client,
+    )
+
+    captured = capsys.readouterr()
+    assert exit_code == 0
+    assert json.loads(captured.out) == {"task_id": "abc-123"}
+    endpoint, posted = client.calls[0]
+    assert endpoint == "/add/message"
+    # add_message_payload json-parses the string into a list
+    assert posted["messages"] == [
+        {"role": "user", "content": "from-file"},
+        {"role": "assistant", "content": "ok"},
+    ]
+    assert posted["tags"] == ["from-file"]
+
+
+def test_cli_add_message_messages_file_overrides_positional(tmp_path, capsys):
+    """When both positional `messages` and --messages-file are set, the file wins."""
+    client = RecordingClient()
+    payload_path = tmp_path / "msgs.json"
+    payload_path.write_text(
+        json.dumps([{"role": "user", "content": "file-wins"}]),
+        encoding="utf-8",
+    )
+
+    main(
+        [
+            "add_message", "user-1", "conv-1",
+            '[{"role":"user","content":"positional"}]',
+            "--messages-file", str(payload_path),
+        ],
+        client=client,
+    )
+
+    _, posted = client.calls[0]
+    assert posted["messages"] == [{"role": "user", "content": "file-wins"}]

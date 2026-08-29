@@ -48,11 +48,22 @@ def build_parser() -> argparse.ArgumentParser:
     p_add.add_argument("conversation_id", nargs="?", default=None, help="Conversation ID (or use --conversation-first-message)")
     p_add.add_argument(
         "messages",
-        help='Messages as a JSON string. e.g. \'[{"role":"user","content":"hello"}]\'',
+        nargs="?",
+        default="",
+        help='Messages as a JSON string, e.g. \'[{"role":"user","content":"hello"}]\'. '
+             "Omit when using --messages-file.",
     )
     p_add.add_argument("--conversation-first-message", help="First message in conversation (auto-generates conversation_id via MD5)")
     p_add.add_argument("--tags", help="Comma-separated tags")
     p_add.add_argument("--info", dest="info_json", help='Custom metadata as JSON string')
+    p_add.add_argument(
+        "--messages-file",
+        dest="messages_file",
+        default=None,
+        help="Path to a UTF-8 file containing the messages JSON. Use this when the messages "
+             "payload exceeds the OS argv size limit (~32KB on Windows). When set, this "
+             "overrides the positional `messages` argument.",
+    )
     p_add.add_argument("--allow-knowledgebase-ids", help="Comma-separated knowledgebase IDs")
     p_add.add_argument("--agent-id", help="Agent ID for multi-agent isolation (overrides MEMOS_AGENT_ID env var)")
     p_add.add_argument("--app-id", help="App ID for multi-app isolation (overrides MEMOS_APP_ID env var)")
@@ -205,6 +216,7 @@ def dispatch(args: argparse.Namespace, client: MemosClient, stdin_buffer):
             client.config.allow_public,
             args.allow_knowledgebase_ids,
             client.config.async_mode,
+            messages_file=args.messages_file,
         )
 
     if args.command == "delete":
