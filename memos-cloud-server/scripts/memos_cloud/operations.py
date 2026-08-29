@@ -60,7 +60,18 @@ def add_message(
     allow_public: Optional[bool] = None,
     allow_knowledgebase_ids: Optional[str] = None,
     async_mode: Optional[bool] = None,
+    messages_file: Optional[str] = None,
 ):
+    """
+    Persist `messages_json_str` (or the contents of `messages_file` if provided)
+    into the conversation identified by `conversation_id` /
+    `conversation_first_message`. Exactly one of `messages_json_str` or
+    `messages_file` must carry a non-empty payload; `messages_file` is intended
+    for payloads that exceed the OS argv size limit (~32KB on Windows).
+    """
+    if messages_file:
+        from pathlib import Path as _P
+        messages_json_str = _P(messages_file).read_text(encoding="utf-8")
     cid = resolve_conversation_id(user_id, conversation_id, conversation_first_message)
     if not cid:
         from .errors import ValidationError
